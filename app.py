@@ -52,4 +52,4 @@ def search():
     return Response(json.dumps(simplified, ensure_ascii=False), mimetype='application/json')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=10000)
