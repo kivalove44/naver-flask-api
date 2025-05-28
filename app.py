@@ -28,7 +28,7 @@ def search():
     if search_type not in NAVER_ENDPOINTS:
         return jsonify({"error": "Invalid search type"}), 400
 
-    # ✅ count 파라미터 (1~100 자유 입력)
+    # ✅ count 자유입력: 기본값 30, 범위 1~100 제한
     count = request.args.get("count")
     try:
         count = int(count)
@@ -55,6 +55,7 @@ def search():
         simplified.append({
             "title": item.get("title", "").replace("<b>", "").replace("</b>", ""),
             "link": item.get("link", ""),
+            "price": item.get("lprice", ""),  # ✅ 가격 정보 추가!
             "description": item.get("description", "").replace("<b>", "").replace("</b>", "")
         })
 
