@@ -28,6 +28,15 @@ def search():
     if search_type not in NAVER_ENDPOINTS:
         return jsonify({"error": "Invalid search type"}), 400
 
+    # ✅ count 파라미터 (1~100 자유 입력)
+    count = request.args.get("count")
+    try:
+        count = int(count)
+        if count < 1 or count > 100:
+            count = 30
+    except:
+        count = 30
+
     url = f"https://openapi.naver.com/v1/search/{NAVER_ENDPOINTS[search_type]}"
     headers = {
         "X-Naver-Client-Id": CLIENT_ID,
@@ -35,7 +44,7 @@ def search():
     }
     params = {
         "query": query,
-        "display": 5
+        "display": count
     }
 
     res = requests.get(url, headers=headers, params=params)
